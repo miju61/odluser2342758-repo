@@ -1,5 +1,11 @@
 # Use the official Alpine image as a base
-FROM node:20-alpine
+FROM node:24-alpine
+
+# Update Alpine packages to latest versions to patch OS-level vulnerabilities
+RUN apk upgrade --no-cache
+
+# Update npm to latest to patch vulnerabilities in npm's bundled dependencies
+RUN npm install -g npm@latest
 
 # Set the working directory in the container
 WORKDIR /usr/src/app

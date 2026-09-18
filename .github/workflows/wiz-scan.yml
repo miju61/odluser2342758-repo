@@ -11,5 +11,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Test workflow
-        run: echo "GitHub Actions workflow is ready"
+      - name: Download Wiz CLI
+        run: |
+          curl -o wizcli https://downloads.wiz.io/v1/wizcli/latest/wizcli-linux-amd64
+          chmod +x wizcli
+
+      - name: Run Wiz Code Scan
+        env:
+          WIZ_CLIENT_ID: ${{ secrets.WIZ_CLIENT_ID }}
+          WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
+        run: |
+          ./wizcli scan dir .
